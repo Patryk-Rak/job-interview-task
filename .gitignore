@@ -5,6 +5,7 @@ __pycache__/
 
 # git files '.idea'
 .idea
+.idea/
 
 
 # C extensions

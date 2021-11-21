@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Offers{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="sidebar">
+        <h3>Categories</h3>
+        <ul>
+            <li {% if not category %}class="selected"{% endif %}>
+                <a href="{% url 'offers:offer_list' %}">All</a>
+            </li>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}
+                        class="selected"
+                    {% endif %}>
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="main" class="product-list">
+        <h1><h1>{% if category %}{{ category.name }}{% else %}Offers{% endif %}</h1>
+          {% for offer in offers %}
+            <div class="item">
+                <a href="{{ offer.get_absolute_url }}">
+                    <img src="{% if offer.image %}{{ offer.image.url }}
+                    {%else %}{% static 'images/no_image.png' %}{% endif %}">
+                </a>
+                <a href="{{ offer.get_absolute_url }}">{{ offer.title }}</a>
+                <br>
+                ${{ offer.price }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
